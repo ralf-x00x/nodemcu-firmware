@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<!-- OTA:-->
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>ESP12F管理后台</title>
+    <script language='javascript'>
+        function config() {
+            var ssid = configForm.ssid.value;
+            var password = configForm.password.value;
+            var ota = configForm.ota.value;
+            var host = configForm.host.value;
+            var port = configForm.port.value;
+            var topic = configForm.topic.value;
+            var mqttuname = configForm.mqttuname.value;
+            var mqttpwd = configForm.mqttpwd.value;
+            if (('' == ssid) && ('' == password) && ('' == ota) && ('' == host) && ('' == port) && ('' == topic)) {
+                alert('[WiFi名称、WiFi密码]、[OTA固件链接]、或者[MQTT host、port、topic]，至少要填写一组!');
+                return;
+            }
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open('GET', '/config?ssid=' + ssid + '&password=' + password + '&ota=' + ota + '&host=' + host + '&port=' + port + '&topic=' + topic + '&mqttuname=' + mqttuname + '&mqttpwd=' + mqttpwd, true);
+            xmlhttp.send();
+            alert('已提交，保存后设备会自动重启!');
+        }
+    </script>
+</head>
+
+<body>
+    <p>ESP12F网页配网 {ver}</p>
+    <form name='configForm'>
+        WiFi名称:
+        <input type='text' name='ssid' placeholder='请输入WiFi名称,留空不设置' value='{ssid}'>
+        <br>
+        WiFi密码:
+        <input type='text' name='password' placeholder='请输入WiFi密码,留空不设置' value='{password}'>
+        <br><br>
+        <!-- OTA:
+        <input type='text' name='ota' placeholder='请输入OTA固件链接,留空不设置' value='{ota}'>
+        <br><br>
+        Host:
+        <input type='text' name='host' placeholder='请输入MQTT服务器地址,留空不设置' value='{host}'>
+        <br>
+        Port:
+        <input type='text' name='port' placeholder='请输入MQTT服务器端口,留空不设置' value='{port}'>
+        <br>
+        Username:
+        <input type='text' name='mqttuname' placeholder='请输入MQTT用户名,留空不设置' value='{mqttuname}'>
+        <br>
+        Password:
+        <input type='text' name='mqttpwd' placeholder='请输入MQTT密码,留空不设置' value='{mqttpwd}'>
+        <br>
+        Topic:
+        <input type='text' name='topic' placeholder='请输入MQTT topic,留空不设置' value='{topic}'>
+        <br> -->
+        <input type='button' value='确定' onclick='config()'>
+    </form>
+
+    <!-- <br><br>
+    <hr>
+    <form method='POST' action='/update' enctype='multipart/form-data'>
+        Firmware:<br>
+        <input type='file' accept='.bin,.bin.gz' name='firmware'>
+        <input type='submit' value='Firmware Update'>
+    </form>
+
+    <br><br>
+    <hr>
+    <form method='POST' action='/update' enctype='multipart/form-data'>
+        Filesystem:<br>
+        <input type='file' accept='.bin,.bin.gz' name='filesystem'>
+        <input type='submit' value='Filesystem Update'>
+    </form> -->
+</body>
+</html>
